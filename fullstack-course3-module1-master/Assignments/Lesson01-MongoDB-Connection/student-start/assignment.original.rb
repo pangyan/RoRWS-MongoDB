@@ -1,7 +1,4 @@
-require 'mongo'
 require 'pp'
-
-Mongo::Logger.level == Logger::DEBUG
 
 class Solution
   @@db = nil
@@ -11,9 +8,7 @@ class Solution
     #create a `Mongo::Client` connection to the server using a URL (.e.g., 'mongodb://localhost:27017')
     #configure the client to use the `test` database
     #assign the client to @@db class variable and return that client
-	db = Mongo::Client.new('mongodb://localhost:27017')
-	db = db.use('test')
-    return db
+    
   end
 
   #Implement a class method in the `Solution` class called `collection` that will
