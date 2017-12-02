@@ -44,7 +44,6 @@ class Solution
 
   def clear_collection
     #place solution here
-	return @coll.delete_many
   end
 
   def load_collection(file_path) 
