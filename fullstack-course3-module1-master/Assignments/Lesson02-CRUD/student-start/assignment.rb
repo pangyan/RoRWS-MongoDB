@@ -5,6 +5,9 @@ require 'byebug'
 Mongo::Logger.logger.level = ::Logger::INFO
 #Mongo::Logger.logger.level = ::Logger::DEBUG
 
+#A variable prefixed with @ is an instance variable, while one prefixed with @@ is a class variable.
+#See https://stackoverflow.com/questions/5890118/what-does-variable-mean-in-ruby/5890127
+
 class Solution
   MONGO_URL='mongodb://localhost:27017'
   MONGO_DATABASE='test'
@@ -49,10 +52,12 @@ class Solution
 
   def load_collection(file_path) 
     #place solution here
+	return @coll.insert_many(self.class.load_hash(file_path))
   end
 
   def insert(race_result)
     #place solution here
+	return @coll.insert_one(race_result)
   end
 
   #
@@ -61,10 +66,13 @@ class Solution
 
   def all(prototype={})
     #place solution here
+	return @coll.find(prototype)
   end
 
   def find_by_name(fname, lname)
     #place solution here
+	view = @coll.find({ "first_name"=>fname, "last_name"=>lname })
+	view = view.projection({ first_name: 1, last_name: 1, number: 1, _id: 0 })
   end
 
   #
@@ -73,6 +81,12 @@ class Solution
 
   def find_group_results(group, offset, limit) 
     #place solution here
+	view = @coll.find({ "group"=>group })
+	view = view.projection({ group: 0, _id: 0 })
+	view = view.sort( { secs: 1 } )
+	view = view.skip(offset)
+	view = view.limit(limit)
+	return view
   end
 
   #
@@ -81,6 +95,7 @@ class Solution
 
   def find_between(min, max) 
     #place solution here
+	return @coll.find({ "secs"=>{ "$gt" => min, "$lt" => max } })
   end
 
   def find_by_letter(letter, offset, limit) 
