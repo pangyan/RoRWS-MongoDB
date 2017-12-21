@@ -114,6 +114,9 @@ class Solution
   
   def update_racer(racer)
     #place solution here
+	view = @coll.find({ "_id"=>racer["_id"] })
+	view = view.replace_one(racer)
+	return view
   end
 
   def add_time(number, secs)
