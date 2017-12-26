@@ -121,7 +121,6 @@ class Solution
 
   def add_time(number, secs)
     #place solution here
-	@coll.update_one({ "number" => number }, { "$inc" => {"secs": secs} })
   end
 
 end
