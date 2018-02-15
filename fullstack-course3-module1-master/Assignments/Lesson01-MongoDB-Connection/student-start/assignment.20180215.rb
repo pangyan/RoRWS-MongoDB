@@ -11,8 +11,8 @@ class Solution
     #create a `Mongo::Client` connection to the server using a URL (.e.g., 'mongodb://localhost:27017')
     #configure the client to use the `test` database
     #assign the client to @@db class variable and return that client
-	db = Mongo::Client.new('mongodb://pywong:pywong@ds012178.mlab.com:12178/py')
-	db = db.use('py')
+	db = Mongo::Client.new('mongodb://localhost:27017')
+	db = db.use('test')
 	@@db = db
     return db
   end

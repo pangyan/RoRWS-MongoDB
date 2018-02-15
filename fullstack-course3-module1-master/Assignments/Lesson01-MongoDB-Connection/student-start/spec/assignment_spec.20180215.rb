@@ -7,8 +7,8 @@ Mongo::Logger.logger.level = ::Logger::INFO
 describe Solution do
   subject(:solution) { Solution.new }
 
-  let!(:db_url) { Mongo::Client.new('mongodb://pywong:pywong@ds012178.mlab.com:12178/py') }
-  let!(:connection) { db_url.use('py') }
+  let!(:db_url) { Mongo::Client.new('mongodb://localhost:27017') }
+  let!(:connection) { db_url.use('test') }
 
   before :all do
     $continue = true
@@ -43,7 +43,7 @@ describe Solution do
 
   # test for presence of test database and zips collection and data
   context "rq01" do
-    it "Database 'py' should exist with collection 'zips' with data" do
+    it "Database 'test' should exist with collection 'zips' with data" do
       expect(connection[:zips].find.count).to be > 0
     end
   end 
@@ -72,7 +72,7 @@ describe Solution do
     it "returns a mongo client connected to test collection" do
       expect(db).to_not be_nil
       expect(db).to be_a(Mongo::Client)
-      expect(db.database.name).to eq('py')
+      expect(db.database.name).to eq('test')
     end
 
     it "mongo_client method returns a connection to test db" do 
